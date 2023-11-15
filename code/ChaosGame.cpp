@@ -8,7 +8,12 @@
 // Make code easier to type with "using namespace"
 using namespace sf;
 using namespace std;
-
+void add_dot(vector<Vector2f>& points, vector<Vector2f> vertices) {
+    int randVert = rand() % 3;
+    int dotX = (points[points.size() - 1].x + vertices[randVert].x) / 2;
+    int dotY = (points[points.size() - 1].y + vertices[randVert].y) / 2;
+    points.push_back(Vector2f(dotX, dotY));
+}
 int main()
 {
     // Create a video mode object
@@ -98,13 +103,14 @@ int main()
 		****************************************
 		*/
                 
-        if(points.size() > 0 && points.size() < 2000)
+        if(points.size() > 0 && points.size() < 10000)
         {
             text.setString("The Sierpinski triangle!");
-            int randVert = rand() % 3;
-            int dotX = (points[points.size() - 1].x + vertices[randVert].x) / 2;
-            int dotY = (points[points.size() - 1].y + vertices[randVert].y) / 2;
-            points.push_back(Vector2f(dotX, dotY));
+            add_dot(points, vertices);
+            add_dot(points, vertices);
+            add_dot(points, vertices);
+            add_dot(points, vertices);
+            add_dot(points, vertices);
             ///generate more point(s)
             ///select random vertex
             ///calculate midpoint between random vertex and the last point in the vector
@@ -125,14 +131,14 @@ int main()
 
         for(int i = 0; i < vertices.size(); i++)
         {
-            RectangleShape rect(Vector2f(10,10));
+            RectangleShape rect(Vector2f(5,5));
             rect.setPosition(Vector2f(vertices[i].x, vertices[i].y));
             rect.setFillColor(Color::Magenta);
             window.draw(rect);
         }
 
         for (int i = 0; i < points.size(); i++) {
-            CircleShape dot(2.5);
+            CircleShape dot(1);
             dot.setPosition(Vector2f(points[i].x, points[i].y));
             dot.setFillColor(Color::Yellow);
             window.draw(dot);
